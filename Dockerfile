@@ -9,6 +9,7 @@ ADD https://s3.amazonaws.com/Minecraft.Download/versions/1.8/minecraft_server.1.
 WORKDIR /srv/minecraft
 
 RUN chmod a+rwX /srv/minecraft/ -R
+RUN echo "eula=true" > eula.txt
 
 USER nobody
 
