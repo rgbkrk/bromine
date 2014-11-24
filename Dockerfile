@@ -5,6 +5,7 @@ MAINTAINER Kyle Kelley <rgbkrk@gmail.com>
 EXPOSE 25565
 EXPOSE 8080
 
+RUN apt-get update
 RUN apt-get install nodejs-legacy npm -y
 
 RUN mkdir -p /srv/minecraft

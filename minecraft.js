@@ -22,10 +22,11 @@ minecraftServerProcess.stderr.on('data', log);
 
 // Create an express web app
 var app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.json());
 
 app.post('/api/command', function (req, res) {
-  var command = req.param('Body');
+  var command = req.param('command');
+  console.log("Command: '" + command + "'\n");
   minecraftServerProcess.stdin.write(command+'\n');
 
   // Buffer output for a bit
@@ -40,7 +41,7 @@ app.post('/api/command', function (req, res) {
   setTimeout(function() {
     minecraftServerProcess.stdout.removeListener('data', collector);
 
-    response.send(buffer.join(''));
+    res.send(buffer.join(''));
 
   }, 250);
 
