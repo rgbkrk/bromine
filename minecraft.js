@@ -20,11 +20,10 @@ function log(data) {
 minecraftServerProcess.stdout.on('data', log);
 minecraftServerProcess.stderr.on('data', log);
 
-// Create an express web app
 var app = express();
-//app.use(bodyParser.json());
 
 app.post('/api/command', function (req, res) {
+  // TODO: Only run the command with a valid API key
   var command = req.param('command');
   console.log("Command: '" + command + "'\n");
   minecraftServerProcess.stdin.write(command+'\n');
@@ -38,6 +37,7 @@ app.post('/api/command', function (req, res) {
 
   minecraftServerProcess.stdout.on('data', collector);
 
+  // Total hack, not sure when Minecraft is done reporting back
   setTimeout(function() {
     minecraftServerProcess.stdout.removeListener('data', collector);
 
