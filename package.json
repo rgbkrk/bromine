@@ -1,0 +1,28 @@
+{
+  "name": "bromine",
+  "version": "1.0.0",
+  "description": "Minecraft server setup",
+  "main": "minecraft.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rgbkrk/bromine.git"
+  },
+  "keywords": [
+    "minecraft",
+    "bromine",
+    "javascript"
+  ],
+  "author": "Kyle Kelley",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/rgbkrk/bromine/issues"
+  },
+  "homepage": "https://github.com/rgbkrk/bromine",
+  "dependencies": {
+    "body-parser": "^1.9.3",
+    "express": "^4.10.3"
+  }
+}
