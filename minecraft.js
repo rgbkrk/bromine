@@ -3,6 +3,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var port = process.env.PORT || 8080;
+var username = process.env.MINECRAFT_ADMIN_USER;
+var password = process.env.MINECRAFT_ADMIN_PASSWORD;
 
 // Our Minecraft multiplayer server process
 var minecraftServerProcess = spawn('java', [
@@ -22,8 +24,9 @@ minecraftServerProcess.stderr.on('data', log);
 
 var app = express();
 
+app.use(express.basicAuth(username, password));
+
 app.post('/api/command', function (req, res) {
-  // TODO: Only run the command with a valid API key
   var command = req.param('command');
   console.log("Command: '" + command + "'\n");
   minecraftServerProcess.stdin.write(command+'\n');
