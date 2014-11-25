@@ -1,11 +1,33 @@
 var spawn = require('child_process').spawn;
 var express = require('express');
 var bodyParser = require('body-parser');
-var basicAuth = require('basic-auth');
 
 var port = process.env.PORT || 8080;
 var username = process.env.MINECRAFT_ADMIN_USER;
 var password = process.env.MINECRAFT_ADMIN_PASSWORD;
+
+// Express 4.0 no longer has this as middleware
+var basicAuth = require('basic-auth');
+
+var auth = function (req, res, next) {
+  function unauthorized(res) {
+    res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+    return res.send(401);
+  };
+
+  var user = basicAuth(req);
+
+  if (!user || !user.name || !user.pass) {
+    return unauthorized(res);
+  };
+
+  if (user.name === username && user.pass === password) {
+    return next();
+  } else {
+    return unauthorized(res);
+  };
+};
+
 
 // Our Minecraft multiplayer server process
 var minecraftServerProcess = spawn('java', [
@@ -27,7 +49,7 @@ var app = express();
 
 app.use(express.basicAuth(username, password));
 
-app.post('/api/command', function (req, res) {
+app.post('/api/command', auth, function (req, res) {
   var command = req.param('command');
   console.log("Command: '" + command + "'\n");
   minecraftServerProcess.stdin.write(command+'\n');
