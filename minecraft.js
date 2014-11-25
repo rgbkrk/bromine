@@ -47,8 +47,6 @@ minecraftServerProcess.stderr.on('data', log);
 
 var app = express();
 
-app.use(express.basicAuth(username, password));
-
 app.post('/api/command', auth, function (req, res) {
   var command = req.param('command');
   console.log("Command: '" + command + "'\n");
