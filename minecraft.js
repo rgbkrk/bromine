@@ -1,6 +1,7 @@
 var spawn = require('child_process').spawn;
 var express = require('express');
 var bodyParser = require('body-parser');
+var basicAuth = require('basic-auth');
 
 var port = process.env.PORT || 8080;
 var username = process.env.MINECRAFT_ADMIN_USER;
